@@ -20,47 +20,33 @@ export default function App() {
 
   //registering with train company
   
-  // FOr getting the auth token
-const authenticationData = {
-  clientID: 'your-client-id', // Replace with your actual client ID
-  clientSecret: 'your-client-secret', // Replace with your actual client secret
-};
+  //after getting the auth token and getting the train details like below.
+  //but right now it is being blocked by CORS policy
 
+  //lets say we got the train details from the trains endpoint
+  //it will return a json. lets say we have it in 'data'
+  const trainDetails = useState(data);
+  //keeping our data in usestate variable so we can use it everywhere.
+  const [traindelay,settraindelay]=useState(false);
+  
+  const gettraindelays = () =>{
+    //iterating through the data json.
+    settraindelay(true);
+      
+  }
 
-const authEndpoint = 'http://20.244.56.144/train/auth';
-
-
-const headers = {
-  'Content-Type': 'application/json',
-};
-
-// Make the POST request to obtain the access token
-fetch(authEndpoint, {
-  method: 'POST',
-  headers: headers,
-  body: JSON.stringify(authenticationData),
-})
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Nework response wasnot ok');
-    }
-    return response.json();
-  })
-  .then((data) => {
-    
-    const accessToken = data.accessToken; // Replace 'accessToken' with the actual property name in the response JSON
-    console.log('Access Token:', accessToken);
-
-    
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  }); //again blocked by cors policy and unable to get the data
-
-  //lets say we got the 
   return (
     <div >
-      Hdellow orld 
+      <h1>Trains Central </h1>
+      <p>get all your train details here</p>
+      <button onClick={gettraindelays}>delayed by more than 30min</button>
+      { traindelay &&
+        data.map((item) => {
+          if(item.delayedby > 30){
+            return <p>item.trainName</p>
+          }//delayed train names are added.
+        })
+      }
     </div>
   );
 }
