@@ -21,7 +21,7 @@ export default function App() {
   //registering with train company
   
   //after getting the auth token and getting the train details like below.
-  //but right now it is being blocked by CORS policy
+  //but right now it is being blocked by CORS policy too! unable to get any data!
 
   //lets say we got the train details from the trains endpoint
   //it will return a json. lets say we have it in 'data'
@@ -35,6 +35,11 @@ export default function App() {
       
   }
 
+  const byasc = () =>{
+    const sorteddata=[...trainDetails].sort((a,b) => a.price - b.price);
+    settrainDetails(sorteddata);
+  }
+
   return (
     <div >
       <h1>Trains Central </h1>
@@ -46,6 +51,15 @@ export default function App() {
             return <p>item.trainName</p>
           }//delayed train names are added.
         })
+      }
+
+      {/* now to have them by ascending order of price */}
+      {
+        sorteddata.map((train,index)=> (
+          <li key={index}>
+            {train.trainName} - Price: {train.price}
+          </li>
+        ))
       }
     </div>
   );
